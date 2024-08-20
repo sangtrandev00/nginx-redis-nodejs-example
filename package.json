@@ -1,0 +1,12 @@
+{
+  "name": "nginx-nodejs-redis",
+  "version": "1.0.0",
+  "description": "## Node.js application with Nginx proxy and Redis database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker": "docker-compose up -d"
+  },
+  "author": "",
+  "license": "ISC"
+}

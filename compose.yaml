@@ -1,0 +1,42 @@
+# Giải thích từng câu lệnh ở đây!
+services:
+# 6379 is default port of redis
+  redis:
+    image: 'redislabs/redismod'
+    ports:
+      - '6379:6379'
+  web1:
+  # Restart giá trị của nó là một sự kiện ???
+  # Ngoài on-failure còn có những sự kiện nào ? (What's type of restart event ?)
+    restart: on-failure
+    # This specifies the context directory (./web) where the Dockerfile for this service is located. 
+    # Docker will build the image for web1 from this Dockerfile.
+    build: ./web
+    # Specifies the hostname of the container (phân biệt tên giữa các container khác!)
+    hostname: web1
+    # Map port 5000 of the container to port 81 on the host machine. 
+    # VD: 
+    ports:
+      - '81:5000'
+  web2:
+    restart: on-failure
+    build: ./web
+    hostname: web2
+    ports:
+      - '82:5000'
+      # nginx để làm gì nhỉ ? 
+      # Đóng vai trò là một proxy. Vậy thì hiện tại tác dụng của nó sẽ là gì ?
+      # Nếu không dùng nó thì chuyện gì sẽ xảy ra ?
+      # Nếu dùng được thì cấu hình ra sao ?
+  nginx:
+  # Build image from Dockerfile in ./nginx ?
+  # Nếu có câu lệnh build như thế này thì cần DockerFile thì nó sẽ tự run build trong docker file phải không nhỉ ?
+    build: ./nginx
+    ports:
+    - '80:80'
+    # Phụ thuộc (Phải chạy xong service web1 và web2 thì mới chạy được service này)
+    depends_on:
+    - web1
+    - web2
+
+
